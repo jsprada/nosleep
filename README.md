@@ -16,13 +16,13 @@ session) keeps making progress.
 ## Install
 
 ```
-omarchy plugin add https://github.com/jsprada/nolid.git --enable
+omarchy plugin add https://github.com/jsprada/nosleep.git --enable
 ```
 
 Or clone manually and enable it yourself:
 
 ```
-git clone https://github.com/jsprada/nolid.git ~/.config/omarchy/plugins/lid-stay-awake
+git clone https://github.com/jsprada/nosleep.git ~/.config/omarchy/plugins/lid-stay-awake
 omarchy plugin enable lid-stay-awake
 ```
 
