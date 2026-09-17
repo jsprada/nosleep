@@ -18,9 +18,17 @@ BarWidget {
     return url.indexOf("file://") === 0 ? decodeURIComponent(url.slice(7)) : url
   }
 
+  // Same collapse/reveal behavior as the built-in indicators (Stay Awake,
+  // Dictation, Reminder, ...): hidden while off, peeking (dimmed) while the
+  // pointer is anywhere over the bar's center section, and always shown once
+  // enabled. centerSectionRevealHeld is set by hovering the whole center
+  // section, not just this widget, so it stays consistent with those.
+  readonly property bool revealed: root.stayingAwake
+    || (root.bar && root.bar.centerSectionRevealHeld === true)
+
   visible: true
-  implicitWidth: button.implicitWidth
-  implicitHeight: button.implicitHeight
+  implicitWidth: reveal.implicitWidth
+  implicitHeight: reveal.implicitHeight
 
   function refresh() {
     if (statusProc.running) return
@@ -72,16 +80,24 @@ BarWidget {
     }
   }
 
-  BarIconButton {
-    id: button
-    anchors.fill: parent
-    bar: root.bar
-    text: "󰌢"
-    active: root.stayingAwake
-    dimmed: !root.stayingAwake
-    tooltipText: root.stayingAwake
-      ? "Allow lid close to suspend the laptop"
-      : "Keep the laptop running with the lid closed"
-    onPressed: root.toggle()
+  Item {
+    id: reveal
+
+    implicitWidth: root.vertical ? button.implicitWidth : (root.revealed ? button.implicitWidth : 0)
+    implicitHeight: root.vertical ? (root.revealed ? button.implicitHeight : 0) : button.implicitHeight
+    clip: true
+
+    BarIconButton {
+      id: button
+      anchors.centerIn: parent
+      bar: root.bar
+      text: "󰌢"
+      active: root.stayingAwake
+      dimmed: !root.stayingAwake
+      tooltipText: root.stayingAwake
+        ? "Allow lid close to suspend the laptop"
+        : "Keep the laptop running with the lid closed"
+      onPressed: root.toggle()
+    }
   }
 }
