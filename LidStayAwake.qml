@@ -55,6 +55,23 @@ BarWidget {
     onTriggered: root.refresh()
   }
 
+  IpcHandler {
+    target: "lid-stay-awake"
+
+    function status(): string {
+      return JSON.stringify({ active: root.stayingAwake })
+    }
+
+    function toggle(): string {
+      root.toggle()
+      return root.stayingAwake ? "disabled" : "enabled"
+    }
+
+    function refresh(): void {
+      root.refresh()
+    }
+  }
+
   BarIconButton {
     id: button
     anchors.fill: parent
