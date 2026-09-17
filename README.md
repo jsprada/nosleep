@@ -1,4 +1,4 @@
-# Lid Stay Awake
+# No Sleep
 
 An [Omarchy](https://omarchy.org/) shell plugin that adds a bar toggle for
 keeping your laptop running while the lid is closed — useful for things like
@@ -22,8 +22,8 @@ omarchy plugin add https://github.com/jsprada/nosleep.git --enable
 Or clone manually and enable it yourself:
 
 ```
-git clone https://github.com/jsprada/nosleep.git ~/.config/omarchy/plugins/lid-stay-awake
-omarchy plugin enable lid-stay-awake
+git clone https://github.com/jsprada/nosleep.git ~/.config/omarchy/plugins/nosleep
+omarchy plugin enable nosleep
 ```
 
 ## How it works
@@ -34,7 +34,7 @@ Enabling the toggle spawns a detached
 systemd-inhibit --what=handle-lid-switch:sleep --mode=block sleep infinity
 ```
 
-process and tracks its PID in `~/.local/state/omarchy/toggles/lid-stay-awake.pid`.
+process and tracks its PID in `~/.local/state/omarchy/toggles/nosleep.pid`.
 That's a real logind inhibitor lock: it blocks suspend outright (`sleep`) and
 also tells logind not to run its own automatic lid-close handling
 (`handle-lid-switch`), so it holds regardless of which path would otherwise
@@ -42,12 +42,19 @@ trigger a suspend. Because it's a detached process (via `setsid`), it survives
 Quickshell/omarchy-shell restarts. Disabling the toggle kills that process
 group, which releases the lock.
 
-The bar widget itself (`LidStayAwake.qml`) just polls `lid-stay-awake.sh --status`
-and calls `lid-stay-awake.sh --toggle` on click — all state lives in that one
+The bar widget itself (`NoSleep.qml`) just polls `nosleep.sh --status`
+and calls `nosleep.sh --toggle` on click — all state lives in that one
 script, so nothing needs a background service.
+
+It's also scriptable over Omarchy's shell IPC:
+
+```
+omarchy-shell nosleep status
+omarchy-shell nosleep toggle
+```
 
 ## Uninstall
 
 ```
-omarchy plugin remove lid-stay-awake
+omarchy plugin remove nosleep
 ```
