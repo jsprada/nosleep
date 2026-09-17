@@ -1,12 +1,18 @@
 # No Sleep
 
+![No Sleep bar states: off, off while hovered, and on](screenshots/states.png)
+
 An [Omarchy](https://omarchy.org/) shell plugin that adds a bar toggle for
 keeping your laptop running while the lid is closed — useful for things like
 long-running builds, downloads, or a headless SSH session you don't want to
 interrupt just because you closed the lid to carry the laptop somewhere.
 
-- **Lit up** when enabled: closing the lid will *not* suspend the machine.
-- **Dimmed** when disabled: normal behavior — closing the lid suspends it.
+Behaves just like Omarchy's built-in indicators (Stay Awake, Dictation, ...):
+
+- **Off**: hidden — no icon, no wasted bar space.
+- **Off, hovering the bar's center section**: peeks into view, dimmed, so
+  you can find and click it.
+- **On**: always shown, lit — closing the lid will *not* suspend the machine.
 
 The screen still turns off and locks when you close the lid (that's Omarchy's
 normal lid-close handling, unrelated to this toggle) — the machine just keeps
