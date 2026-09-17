@@ -94,6 +94,9 @@ BarWidget {
       text: "󰌢"
       active: root.stayingAwake
       dimmed: !root.stayingAwake
+      // Matches the built-in indicators (Stay Awake, Dictation, ...): "lit"
+      // is just full-opacity theme foreground, not an accent/urgent tint.
+      useActiveColor: false
       tooltipText: root.stayingAwake
         ? "Allow lid close to suspend the laptop"
         : "Keep the laptop running with the lid closed"
